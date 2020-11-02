@@ -15,6 +15,7 @@ connectDB(); //db connection
 
 // app initializations
 const app = express();
+app.use(express.json());
 
 // dev middlewares
 if (process.env.NODE_ENV === "development") {
