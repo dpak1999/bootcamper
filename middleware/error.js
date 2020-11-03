@@ -1,8 +1,29 @@
+const ErrorResponse = require("../utils/errorResponse");
+
 const errorHandler = (err, req, res, next) => {
-  console.log(err.stack.red);
-  res.status(err.statusCode).json({
+  let error = { ...err };
+  error.message = err.message;
+
+  console.log(err);
+
+  if (err.name === "CastError") {
+    const message = `The ID ${err.value} is not correctly formatted`;
+    error = new ErrorResponse(message, 404);
+  }
+
+  if (err.code === 11000) {
+    const message = "A bootcamp with that name alredy exists";
+    error = new ErrorResponse(message, 400);
+  }
+
+  if (err.name === "ValidationError") {
+    const message = Object.values(err.errors).map((val) => val.message);
+    error = new ErrorResponse(message, 400);
+  }
+
+  res.status(error.statusCode).json({
     success: false,
-    error: err.message,
+    error: error.message,
   });
 };
 
