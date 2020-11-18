@@ -3,6 +3,7 @@ const express = require("express");
 const dotenv = require("dotenv");
 const colors = require("colors");
 const fileupload = require("express-fileupload");
+const cookieParser = require("cookie-parser");
 const morgan = require("morgan");
 
 // file imports
@@ -21,6 +22,7 @@ connectDB(); //db connection
 // app initializations
 const app = express();
 app.use(express.json());
+app.use(cookieParser());
 
 // dev middlewares
 if (process.env.NODE_ENV === "development") {
