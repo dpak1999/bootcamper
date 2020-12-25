@@ -9,8 +9,9 @@ const {
   bootcampPhotoUpload,
 } = require("../controllers/bootcamps");
 
-const { protect, authorize } = require("../middleware/auth");
 const Bootcamp = require("../models/Bootcamp");
+
+const { protect, authorize } = require("../middleware/auth");
 const advancedResults = require("../middleware/advancedResults");
 
 // including other resource routers
