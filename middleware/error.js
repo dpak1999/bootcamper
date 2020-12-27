@@ -7,12 +7,12 @@ const errorHandler = (err, req, res, next) => {
   console.log(err);
 
   if (err.name === "CastError") {
-    const message = `The ID ${err.value} is not correctly formatted`;
+    const message = `Any resource with the ID ${err.value} is not found`;
     error = new ErrorResponse(message, 404);
   }
 
   if (err.code === 11000) {
-    const message = "A bootcamp with that name alredy exists";
+    const message = "A Resource with that name alredy exists";
     error = new ErrorResponse(message, 400);
   }
 
