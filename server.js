@@ -8,6 +8,8 @@ const mongoSanitize = require("express-mongo-sanitize");
 const morgan = require("morgan");
 const helmet = require("helmet");
 const xss = require("xss-clean");
+const rateLimit = require("express-rate-limit");
+const hpp = require("hpp");
 
 // file imports
 const bootcamps = require("./routes/bootcamps");
@@ -45,6 +47,13 @@ app.use(helmet());
 
 // prevent XSS attacks
 app.use(xss());
+
+// rate limiting
+const limiter = rateLimit({ windowMs: 10 * 60 * 1000, max: 100 });
+app.use(limiter);
+
+// prevent http param pollution
+app.use(hpp());
 
 // set static folder
 app.use(express.static(path.join(__dirname, "public")));
